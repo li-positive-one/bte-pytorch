@@ -23,6 +23,6 @@ jobs:
           pip install -r requirements.txt
       - name: make docs
         run: |
-          pip install Sphinx,sphinx-rtd-theme,sphinxcontrib-jsmath
+          pip install sphinx sphinx-rtd-theme sphinxcontrib-jsmath
           cd docs
           make
