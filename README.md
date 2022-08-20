@@ -1,6 +1,10 @@
 # bte-pytorch
 Fully Differentiable Boltzmann Transport Equation solver in PyTorch
 
+[![Documentation Status](https://readthedocs.org/projects/bte-pytorch/badge/?version=latest)](https://bte-pytorch.readthedocs.io/en/latest/?badge=latest)
+
+[Documents](https://bte-pytorch.readthedocs.io/en/latest/index.html#) 
+
 ## Supported Algorithms
 
 Only support D1V1,D1V2,D1V3 now.
@@ -13,7 +17,7 @@ Only support D1V1,D1V2,D1V3 now.
     - ...
 - 13 Moment Equation
 
-[Documents](https://bte-pytorch.readthedocs.io/en/latest/index.html#)
+
 
 ## Installation
 
