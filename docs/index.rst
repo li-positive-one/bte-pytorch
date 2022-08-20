@@ -8,9 +8,8 @@ Welcome to bte's documentation!
 
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
 
-   modules
+   usage
 
 Indices and tables
 ==================
