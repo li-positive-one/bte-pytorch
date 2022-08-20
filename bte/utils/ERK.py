@@ -144,12 +144,3 @@ class RK4_2(RK):
         b = np.array([1 / 8, 3 / 8, 3 / 8, 1 / 8])
         A = np.array([[0, 0, 0, 0], [1 / 3, 0, 0, 0], [-1 / 3, 1, 0, 0], [1, -1, 1, 0]])
         super().__init__(c, b, A)
-
-
-if __name__ == "__main__":
-    a = RK4_2()
-    f = lambda t, x: x
-    u = 1
-    for i in range(10):
-        u = a(f, 0, u, 1 / 10)
-    print("error is:", u - np.exp(1))

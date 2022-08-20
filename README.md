@@ -10,6 +10,7 @@ Only support D1V1,D1V2,D1V3 now.
     - time: RK1/2/3,IMEX-RK1/2/3,...
     - collision: BGK, Binary
 - Grad
+    - ...
 - 13 Moment Equation
 
 [Documents](https://bte-pytorch.readthedocs.io/en/latest/index.html#)

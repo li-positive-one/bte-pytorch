@@ -204,7 +204,7 @@ class Grid_onDVDis_NU(DVDis):
                 vL, wL = distribution.velocity_list(distribution.uniform_velocity,nv, vmin, vmax)
             else:
                 raise ValueError
-        v_meta=DVDisMeta_Grid(vL, wL)
+            v_meta=DVDisMeta_Grid(vL, wL)
         super().__init__(v_meta, None)
 
         self.register_buffer("x",x)
