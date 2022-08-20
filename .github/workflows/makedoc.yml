@@ -15,7 +15,6 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10' 
@@ -24,5 +23,6 @@ jobs:
           pip install -r requirements.txt
       - name: make docs
         run: |
+          pip install Sphinx,sphinx-rtd-theme,sphinxcontrib-jsmath
           cd docs
           make
