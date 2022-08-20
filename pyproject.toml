@@ -1,14 +1,11 @@
 [build-system]
-requires = [
-    "hatchling>=1.8.0",
-]
-build-backend = "hatchling.build"
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "bte-pytorch"
-description = "This is a test of the package"
 readme = "README.md"
-license-files = { paths = ["LICENSE"] }
+license = {file="LICENSE" }
 requires-python = ">=3.7"
 dependencies = [
     "torch >=1.9.0",
@@ -18,22 +15,11 @@ dependencies = [
 authors = [
     { name = "Zhengyi Li", email = "lizhengyi.pku@gmail.com" },
 ]
-dynamic = [
-    "version",
-]
+dynamic = ["version", "description"]
 
 [project.urls]
 Homepage = "https://github.com/li-positive-one/bte-pytorch"
+Documentation = "https://bte-pytorch.readthedocs.io/en/latest"
 
-[tool.hatch.version]
-path = "bte/__init__.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    "bte",
-]
-
-[tool.hatch.build.targets.wheel]
-packages = ["bte"]
-
-[publish.index]
+[tool.flit.module]
+name = "bte"
