@@ -1,0 +1,39 @@
+[build-system]
+requires = [
+    "hatchling>=1.8.0",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "bte-pytorch"
+description = "This is a test of the package"
+readme = "README.md"
+license-files = { paths = ["LICENSE"] }
+requires-python = ">=3.7"
+dependencies = [
+    "pytorch >=1.9.0",
+    "numpy",
+    "scipy",
+]
+authors = [
+    { name = "Zhengyi Li", email = "lizhengyi.pku@gmail.com" },
+]
+dynamic = [
+    "version",
+]
+
+[project.urls]
+Homepage = "https://github.com/li-positive-one/bte-pytorch"
+
+[tool.hatch.version]
+path = "bte/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "bte",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["bte"]
+
+[publish.index]
