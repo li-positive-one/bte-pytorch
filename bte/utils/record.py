@@ -1,11 +1,3 @@
-'''
-Author: lizhengyi lizhengyi@pku.edu.cn
-Date: 2022-06-04 20:32:58
-LastEditors: lizhengyi lizhengyi@pku.edu.cn
-LastEditTime: 2022-06-05 19:26:25
-FilePath: /BTE/bte/utils/record.py
-Description: save M13 data from DVM
-'''
 import torch
 
 def collect_data_G13(dis):
