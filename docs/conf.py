@@ -42,7 +42,8 @@ extensions = [
     'sphinx.ext.inheritance_diagram',
     'autoapi.extension',
     'sphinx.ext.autodoc',
-    'nbsphinx'
+    'nbsphinx',
+    'sphinx.ext.linkcode'
 ]
 autodoc_typehints = 'description'
 autoapi_dirs = ['../bte']
@@ -54,6 +55,14 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store','**.ipynb_checkpoints']
+
+def linkcode_resolve(domain, info):
+    if domain != 'py':
+        return None
+    if not info['module']:
+        return None
+    filename = info['module'].replace('.', '/')
+    return "https://github.com/li-positive-one/bte-pytorch/blob/main/%s.py" % filename
 
 # -- Options for HTML output -------------------------------------------------
 
