@@ -8,12 +8,20 @@ from scipy import special
 from bte.dvm.distribution import DVDis,DVDisMeta_Grid
 
 def get_potential(omega:float):
-	if(omega==0.5):
-		alpha=1.0
-	else:
-		eta=4.0/(2.0*omega-1.0)+1.0
-		alpha=(eta-5.0)/(eta-1.0)
-	return alpha
+    """calculate the alpha for inverse law potential.
+
+    Args:
+        omega (float): :math:`\omega` in :math:`\mu \propto T^{\omega}`.
+
+    Returns:
+        alpha
+    """
+    if(omega==0.5):
+        alpha=1.0
+    else:
+        eta=4.0/(2.0*omega-1.0)+1.0
+        alpha=(eta-5.0)/(eta-1.0)
+    return alpha
 
 def lgwt(N:int,a:float,b:float):
     """Gauss-Legendre quadrature
@@ -118,6 +126,36 @@ def collision_fft(f_spec, kn_bzm, phi, psi, phipsi)->torch.Tensor:
             f_temp=f_temp+fc11*fc22
     fc1=f_spec*phipsi
     fc2=f_spec
+    fc11=fft3d(fc1)
+    fc22=fft3d(fc2)
+    f_temp=f_temp-fc11*fc22
+    Q = 4.0*np.pi**2/kn_bzm/M**2*f_temp.real
+    return Q
+
+def collision_fft_fg(f_spec, g_spec, kn_bzm, phi, psi, phipsi)->torch.Tensor:
+    unum,vnum,wnum=phi.shape[:3]
+    ifft3d=lambda x:ifftn(x,dim=(-3,-2,-1),norm="forward")
+    fft3d=lambda x:fftn(x,dim=(-3,-2,-1),norm="backward")
+
+    f_spec=ifft3d(f_spec)
+    f_spec=f_spec/(unum*vnum*wnum)
+    
+    g_spec=ifft3d(g_spec)
+    g_spec=g_spec/(unum*vnum*wnum)
+
+    f_spec=fftshift(f_spec,dim=(-3,-2,-1))
+    g_spec=fftshift(g_spec,dim=(-3,-2,-1))
+    f_temp=0
+    M=phi.shape[-1]
+    for i in range(1,M-1+1):
+        for j in range(1,M+1):
+            fc1=f_spec*phi[:,:,:,i-1,j-1]
+            fc2=g_spec*psi[:,:,:,i-1,j-1]
+            fc11=fft3d(fc1)
+            fc22=fft3d(fc2)
+            f_temp=f_temp+fc11*fc22
+    fc1=f_spec*phipsi
+    fc2=g_spec
     fc11=fft3d(fc1)
     fc22=fft3d(fc2)
     f_temp=f_temp-fc11*fc22
