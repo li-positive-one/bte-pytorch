@@ -21,7 +21,8 @@ copyright = '2022, Zhengyi Li'
 author = 'Zhengyi Li'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+import bte
+release = bte.__version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -36,12 +37,13 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.todo",
     "sphinx.ext.coverage",
-    "sphinx_rtd_theme",
     "sphinx.ext.mathjax",
     'sphinx.ext.graphviz',
     'sphinx.ext.inheritance_diagram',
     'autoapi.extension',
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
+    'nbsphinx',
+    'sphinx.ext.linkcode'
 ]
 autodoc_typehints = 'description'
 autoapi_dirs = ['../bte']
@@ -52,7 +54,15 @@ templates_path = ['_templates']
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store','**.ipynb_checkpoints']
+
+def linkcode_resolve(domain, info):
+    if domain != 'py':
+        return None
+    if not info['module']:
+        return None
+    filename = info['module'].replace('.', '/')
+    return "https://github.com/li-positive-one/bte-pytorch/blob/main/%s.py" % filename
 
 # -- Options for HTML output -------------------------------------------------
 

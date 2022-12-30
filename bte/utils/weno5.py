@@ -1,5 +1,4 @@
-"""
-This file contains some basic function for weno.
+"""This file contains some basic function for weno.
 """
 
 

@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Publish package
 on: [push]
 jobs:
   Explore-GitHub-Actions:
@@ -21,8 +21,17 @@ jobs:
       - name: install requirements
         run: |
           pip install -r requirements.txt
-      - name: make docs
+          pip install flit
+      - name: build package
         run: |
-          pip install sphinx sphinx-rtd-theme sphinxcontrib-jsmath
-          cd docs
-          make
+          flit build
+      - name: Publish package to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository_url: https://test.pypi.org/legacy/
+      - name: Publish package
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.PYPI_API_TOKEN }}
