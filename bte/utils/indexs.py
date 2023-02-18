@@ -11,7 +11,7 @@ def next_index(idx):
     for n in range(M-1,0,-1):
         if(idx[n-1]>0):
             idx[n]=s+1
-            idx[n-1]=idx[n-1]-1;
+            idx[n-1]=idx[n-1]-1
             return idx
     idx[0]=s+1
     return idx
