@@ -1,5 +1,9 @@
 name: Publish package
-on: [push]
+on: 
+  push:
+    branches:
+      - main
+      - 'releases/**'
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
@@ -25,11 +29,6 @@ jobs:
       - name: build package
         run: |
           flit build
-      - name: Publish package to TestPyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          repository_url: https://test.pypi.org/legacy/
       - name: Publish package
         if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
         uses: pypa/gh-action-pypi-publish@release/v1
