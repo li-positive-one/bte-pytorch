@@ -4,6 +4,9 @@ def get_gamma(ck):
     get_gamma = (ck+5)/(ck+3)
     return get_gamma
 
+def get_sos(gamma,T):
+    return math.sqrt(gamma*T)
+    
 def get_potential(omega):
     if(omega==0.5):
         alpha=1.0
