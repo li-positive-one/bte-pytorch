@@ -1,6 +1,8 @@
 import re
 import numpy as np
 import torch
+from scipy.interpolate import RegularGridInterpolator
+from bte.utils.fvm import fvmlinspace_t, fvmlinspace
 
 def read_data(filename, verbose=True):
     with open(filename) as f:
@@ -27,10 +29,6 @@ def read_data(filename, verbose=True):
                 bi=bi+(i-1)*(j-1)
     return output
 
-from scipy.interpolate import RegularGridInterpolator
-def fvmlinspace(vmin,vmax,nv):
-    dv=(vmax-vmin)/nv
-    return np.linspace(vmin+dv/2,vmax-dv/2,nv)
 
 def remesh(data,newN):
     originN=data.shape[0]
@@ -42,6 +40,7 @@ def remesh(data,newN):
     Nxg, Nyg = np.meshgrid(Nx,Ny, indexing='ij')
     Nxy=np.stack((Nxg, Nyg),axis=-1).reshape((newN*newN,2))
     return interp(Nxy).reshape((newN,newN)+data.shape[2:])
+
 def read_tecplot(filename):
     with open(filename) as f:
         head1=f.readline()
@@ -52,10 +51,3 @@ def read_tecplot(filename):
             data.append([float(s) for s in l.split()])
         data=np.array(data)
     return p,data
-def fvmlinspace_t(vmin,vmax,nv):
-    dv=(vmax-vmin)/nv
-    return torch.linspace(vmin+dv/2,vmax-dv/2,nv)
-
-def fvmlinspace(vmin,vmax,nv):
-    dv=(vmax-vmin)/nv
-    return np.linspace(vmin+dv/2,vmax-dv/2,nv)

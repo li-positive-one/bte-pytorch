@@ -1,0 +1,48 @@
+Kn: 0.01
+omega: 0.81
+collision: BGK
+case: Sod
+dataset:
+  IV_points: 100
+  BV_points: 200
+  IN_points: 700
+network:
+  neurons: [80, 80, 80, 80, 80]
+  multires: [1, 4, 16]
+  split: true
+  primloss: true
+  lossfunc: MSE
+  weight: [100, 100, 10]
+  VDF_weight: 1
+  rank: 80
+optim:
+  Adam_steps: 10000
+  AdaptiveWeight: true
+  L-BFGS_steps: 0
+  lr_scheduler:
+    max_lr: 0.001
+    min_lr: 1.0e-05
+    name: CosineDecayLR
+vmesh:
+  nv: [96, 24, 24]
+  vmax: [5, 5, 5]
+  vmin: [-5, -5, -5]
+  # nv: [96, 24, 24]
+  # vmax: [10, 10, 10]
+  # vmin: [-10, -10, -10]
+ivsmooth:
+  sigma: 2
+  wsize: 21
+  width: 0.005
+xtmesh:
+  bdc:
+    - periodic
+  tmax: 0.1
+  tmin: 0.0
+  xmax: 0.5
+  xmin: -0.5
+  nx: 400
+report: true
+hydra:
+  job:
+    chdir: true

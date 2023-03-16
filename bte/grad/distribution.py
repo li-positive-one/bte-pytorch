@@ -582,8 +582,6 @@ def uniform_velocity(
     w = dv * torch.ones_like(v)
     v1 = 0.5 * (v + 1.0) * (vmax - vmin) + vmin
     w1 = 0.5 * (vmax - vmin) * w
-    #v1 = torch.tensor(v1, dtype=torch.get_default_dtype())
-    #w1 = torch.tensor(w1, dtype=torch.get_default_dtype())
     v1 = v1.reshape([-1, 1])
     w1 = w1.reshape([-1, 1])
     return v1, w1
@@ -615,7 +613,7 @@ def legendre_velocity(
 def uniform_velocity_2d(nv, vmin, vmax):
     v1, w1 = uniform_velocity(nv[0], vmin[0], vmax[0])
     v2, w2 = uniform_velocity(nv[1], vmin[1], vmax[1])
-    grid_x, grid_y = torch.meshgrid(v1.squeeze(), v2.squeeze())
+    grid_x, grid_y = torch.meshgrid(v1.squeeze(), v2.squeeze(), indexing='ij')
     v = torch.stack([grid_x, grid_y], dim=-1)
     w = w1.reshape([-1, 1]) * w2.reshape([1, -1])
     v = v.reshape([-1, 2])
@@ -626,7 +624,7 @@ def uniform_velocity_2d(nv, vmin, vmax):
 def legendre_velocity_2d(nv, vmin, vmax):
     v1, w1 = legendre_velocity(nv[0], vmin[0], vmax[0])
     v2, w2 = legendre_velocity(nv[1], vmin[1], vmax[1])
-    grid_x, grid_y = torch.meshgrid(v1.squeeze(), v2.squeeze())
+    grid_x, grid_y = torch.meshgrid(v1.squeeze(), v2.squeeze(), indexing='ij')
     v = torch.stack([grid_x, grid_y], dim=-1)
     w = w1.reshape([-1, 1]) * w2.reshape([1, -1])
     v = v.reshape([-1, 2])
@@ -645,7 +643,7 @@ def ND_velocity(func:Callable[[int,int,int],Tuple]):
             w=w.reshape([1,]*d+[-1,]+[1,]*(DIM-d-1))
             vL.append(v)
             wL.append(w)
-        grids = torch.meshgrid(*[v.squeeze() for v in vL])
+        grids = torch.meshgrid(*[v.squeeze() for v in vL], indexing='ij')
         V = torch.stack(grids, dim=-1)
         W = functools.reduce(lambda a,b:a*b,wL)
         V = V.reshape([-1, DIM])
@@ -672,7 +670,7 @@ def velocity_list(func, nvT:Tuple, vminT:Tuple, vmaxT:Tuple):
 def product_meshgrid(vL:List, wL:List):
     assert len(vL)==len(wL)
     DIM = len(vL)
-    grids = torch.meshgrid(*[v.squeeze() for v in vL])
+    grids = torch.meshgrid(*[v.squeeze() for v in vL], indexing='ij')
     V = torch.stack(grids, dim=-1)
     W = functools.reduce(lambda a,b:a*b,wL)
     V = V.reshape([-1, DIM])

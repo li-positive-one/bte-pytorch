@@ -130,3 +130,5 @@ dmypy.json
 
 .vscode
 docs/generated
+examples/nsr/outputs
+*.png

@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-DATAPATH="/home/zyli/NRXXPKU/examples/test33/A/A_10_10.bin"
+DATAPATH="NRXXPKU/examples/test33/A/A_10_10.bin"
 MAX_DEG=10
 
 def load_collision_kernel(kernel_path=DATAPATH,  max_order=MAX_DEG, order=None,dtype=torch.float32):
